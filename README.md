@@ -35,3 +35,7 @@ docker compose up --build -d
 ```
 
 `./data` 会挂载到容器中，容器重启不会删除 SQLite 数据。作品只引用 YouTube、Bilibili 或其他 HTTPS 视频地址，不上传本地图片和视频。
+
+## Vercel
+
+本地和 Docker 默认使用 SQLite。Vercel 部署必须连接 Postgres/Neon，并提供 `POSTGRES_URL`；应用会在首次请求时自动创建数据表。还需在 Vercel 项目环境变量中配置 `ADMIN_SECRET_HASH`、`SESSION_SECRET` 和生产站点的 `APP_ORIGIN`。

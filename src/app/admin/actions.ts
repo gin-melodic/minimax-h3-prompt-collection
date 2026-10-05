@@ -64,20 +64,20 @@ async function parseWork(formData: FormData) {
 }
 
 export async function createWorkAction(formData: FormData) {
-  createWork(await parseWork(formData));
+  await createWork(await parseWork(formData));
   revalidatePath("/");
   redirect("/admin/works");
 }
 
 export async function updateWorkAction(id: number, formData: FormData) {
-  updateWork(id, await parseWork(formData));
+  await updateWork(id, await parseWork(formData));
   revalidatePath("/");
   redirect("/admin/works");
 }
 
 export async function archiveWorkAction(id: number) {
   if (!(await isAdmin())) throw new Error("Unauthorized");
-  archiveWork(id);
+  await archiveWork(id);
   revalidatePath("/");
   revalidatePath("/admin/works");
 }

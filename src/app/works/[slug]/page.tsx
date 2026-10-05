@@ -7,7 +7,7 @@ import { CopyPrompt } from "@/components/copy-prompt";
 export const dynamic = "force-dynamic";
 
 export default async function WorkPage({ params }: { params: Promise<{ slug: string }> }) {
-  const work = getPublishedWork((await params).slug);
+  const work = await getPublishedWork((await params).slug);
   if (!work) notFound();
   return <main className="work-page">
     <Link href="/" className="back">← 返回作品集</Link>

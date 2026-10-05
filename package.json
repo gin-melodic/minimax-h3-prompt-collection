@@ -13,6 +13,7 @@
     "admin:hash": "tsx scripts/hash-admin-secret.ts"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.2.0",
     "better-sqlite3": "latest",
     "jose": "latest",
     "next": "latest",
