@@ -38,4 +38,4 @@ docker compose up --build -d
 
 ## Vercel
 
-本地和 Docker 默认使用 SQLite。Vercel 部署必须连接 Postgres/Neon，并提供 `POSTGRES_URL`；应用会在首次请求时自动创建数据表。还需在 Vercel 项目环境变量中配置 `ADMIN_SECRET_HASH`、`SESSION_SECRET` 和生产站点的 `APP_ORIGIN`。
+本地和 Docker 默认使用 SQLite。Vercel 部署必须连接 Postgres/Neon，并将集成提供的 `DATABASE_URL`（也兼容 `POSTGRES_URL`、`DATABASE_URL_UNPOOLED`、`POSTGRES_URL_NON_POOLING` 或 `NEON_DATABASE_URL`）暴露到 Production；应用会在首次请求时自动创建数据表。还需在 Vercel 项目环境变量中配置 `ADMIN_SECRET_HASH`、`SESSION_SECRET` 和生产站点的 `APP_ORIGIN`。

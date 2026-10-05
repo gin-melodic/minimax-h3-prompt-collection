@@ -4,7 +4,13 @@ import { neon } from "@neondatabase/serverless";
 import fs from "node:fs";
 import path from "node:path";
 
-const postgresUrl = process.env.POSTGRES_URL || (process.env.DATABASE_URL?.startsWith("postgres") ? process.env.DATABASE_URL : undefined);
+const postgresUrl = [
+  process.env.POSTGRES_URL,
+  process.env.DATABASE_URL,
+  process.env.DATABASE_URL_UNPOOLED,
+  process.env.POSTGRES_URL_NON_POOLING,
+  process.env.NEON_DATABASE_URL,
+].find((value) => value?.startsWith("postgres://") || value?.startsWith("postgresql://"));
 export const usesPostgres = Boolean(postgresUrl);
 
 const tableSql = `CREATE TABLE IF NOT EXISTS works (
@@ -35,6 +41,11 @@ export async function pgQuery<T extends Record<string, unknown>>(query: string, 
 
 const globalForDb = globalThis as unknown as { sqlite?: Database.Database };
 function createSqlite() {
+  if (process.env.VERCEL) {
+    throw new Error(
+      "Postgres is not configured. Connect a Neon/Postgres database to this Vercel project and expose DATABASE_URL or POSTGRES_URL to Production.",
+    );
+  }
   const databasePath = process.env.DATABASE_PATH
     ? path.resolve(/* turbopackIgnore: true */ process.env.DATABASE_PATH)
     : path.join(process.cwd(), "data", "app.db");
